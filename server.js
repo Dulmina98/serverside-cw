@@ -16,7 +16,7 @@ app.use(
                 defaultSrc: ["'self'"],
                 scriptSrc: ["'self'"],
                 styleSrc: ["'self'"],
-                imgSrc: ["'self'", "data:", "https://flagcdn.com"],
+                imgSrc: ["'self'", "data:", "https://flagcdn.com", "https://demofree.sirv.com"],
                 connectSrc: ["'self'", "http://localhost:3000"],
                 fontSrc: ["'self'"],
                 objectSrc: ["'none'"],
