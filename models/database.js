@@ -28,23 +28,6 @@ db.serialize(() => {
       FOREIGN KEY (user_id) REFERENCES users(id)
     )
   `);
-    const testApiKey = 'test-api-key-12345';
-    db.get('SELECT api_key FROM api_keys WHERE api_key = ?', [testApiKey], (err, row) => {
-        if (err) {
-            console.error('Error checking API key:', err);
-        } else if (!row) {
-            // Insert only if it doesn’t exist
-            db.run('INSERT INTO api_keys (user_id, api_key) VALUES (?, ?)', [1, testApiKey], (err) => {
-                if (err) {
-                    console.error('Error inserting API key:', err);
-                } else {
-                    console.log('Test API key inserted');
-                }
-            });
-        } else {
-            console.log('Test API key already exists');
-        }
-    });
 });
 
 module.exports = db;
