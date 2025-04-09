@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, Card, Col, Container, Row, Table} from 'react-bootstrap';
+import {Alert, Button, Card, Col, Container, Form, Row, Table} from 'react-bootstrap';
 import axios from 'axios';
 
 const AdminDashboard = ({token}) => {
     const [keys, setKeys] = useState([]);
     const [message, setMessage] = useState('');
+    const [countryName, setCountryName] = useState('');
+    const [countryDetails, setCountryDetails] = useState(null);
+    const [fetchError, setFetchError] = useState('');
 
     useEffect(() => {
         const fetchKeys = async () => {
@@ -51,6 +54,35 @@ const AdminDashboard = ({token}) => {
             setKeys(response.data.keys);
         } catch (error) {
             setMessage('Failed to revoke key');
+        }
+    };
+
+    const fetchCountryDetails = async () => {
+        if (!countryName) {
+            setFetchError('Please enter a country name');
+            return;
+        }
+        if (!keys.length) {
+            setFetchError('Please generate an API key first');
+            return;
+        }
+        const activeKey = keys.find((key) => key.is_active)?.api_key;
+        if (!activeKey) {
+            setFetchError('No active API key available');
+            return;
+        }
+
+        try {
+            const response = await axios.get(`/api/countries/${countryName}`, {
+                headers: {'X-API-Key': activeKey},
+            });
+            setCountryDetails(response.data);
+            setFetchError('');
+            const keysResponse = await axios.get('/admin', {headers: {Authorization: `Bearer ${token}`}});
+            setKeys(keysResponse.data.keys);
+        } catch (error) {
+            setFetchError(error.response?.data?.error || 'Failed to fetch country details');
+            setCountryDetails(null);
         }
     };
 
@@ -120,6 +152,61 @@ const AdminDashboard = ({token}) => {
                         ))}
                         </tbody>
                     </Table>
+                </Card.Body>
+            </Card>
+
+            <Card className="mt-4">
+                <Card.Body>
+                    <Card.Title as="h3">Fetch Country Details</Card.Title>
+                    <Form.Group className="mb-3">
+                        <Row className="align-items-center">
+                            <Col xs={12} md={8} className="mb-2 mb-md-0">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter country name (e.g., Japan)"
+                                    value={countryName}
+                                    onChange={(e) => setCountryName(e.target.value)}
+                                />
+                            </Col>
+                            <Col xs={12} md={4}>
+                                <Button variant="primary" onClick={fetchCountryDetails} className="w-100">
+                                    Fetch Details
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form.Group>
+
+                    {fetchError && (
+                        <Alert variant="danger" className="mb-3">
+                            {fetchError}
+                        </Alert>
+                    )}
+
+                    {countryDetails && (
+                        <div>
+                            <h4>{countryDetails.name}</h4>
+                            <p>
+                                <strong>Capital:</strong> {countryDetails.capital?.join(', ') || 'N/A'}
+                            </p>
+                            <p>
+                                <strong>Currency:</strong>{' '}
+                                {Object.values(countryDetails.currency)[0]?.name || 'N/A'} (
+                                {Object.keys(countryDetails.currency)[0]})
+                            </p>
+                            <p>
+                                <strong>Languages:</strong>{' '}
+                                {Object.values(countryDetails.languages).join(', ') || 'N/A'}
+                            </p>
+                            <img
+                                src={countryDetails.flag}
+                                alt={`${countryDetails.name} flag`}
+                                style={{maxWidth: '100px'}}
+                                onError={(e) => {
+                                    e.target.src = 'https://demofree.sirv.com/nope-not-here.jpg';
+                                }}
+                            />
+                        </div>
+                    )}
                 </Card.Body>
             </Card>
         </Container>
