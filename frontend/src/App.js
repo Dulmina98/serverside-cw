@@ -1,11 +1,11 @@
 import './App.css';
-import Login from "./components/login";
 import {BrowserRouter} from "react-router-dom";
+import AdminDashboard from "./components/admin";
 
 function App() {
   return (
       <BrowserRouter>
-          <Login/>
+          <AdminDashboard/>
       </BrowserRouter>
   );
 }
