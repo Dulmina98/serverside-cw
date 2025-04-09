@@ -17,9 +17,9 @@ REST principles, return JSON responses, and require authentication where specifi
 
 ```
 {
-"username": "string" (min 3, max 30),
-"email": "string" (valid email),
-"password": "string" (min 6)
+    "username": "string" (min 3, max 30),
+    "email": "string" (valid email),
+    "password": "string" (min 6)
 }
 ```
 
@@ -42,8 +42,8 @@ REST principles, return JSON responses, and require authentication where specifi
 
 ```
 {
-"email": "string" (valid email),
-"password": "string"
+    "email": "string" (valid email),
+    "password": "string"
 }
 ```
 
@@ -69,14 +69,13 @@ REST principles, return JSON responses, and require authentication where specifi
 
 ```
 [
-{
-"name": "Afghanistan",
-"currency": { "AFN": { "name": "Afghan afghani", "symbol": "؋" } },
-"capital": ["Kabul"],
-"languages": { "prs": "Dari", "pus": "Pashto", "tuk": "Turkmen" },
-"flag": "https://flagcdn.com/w320/af.png"
-},
-...
+  {
+    "name": "Japan",
+    "currency": { "JPY": { "name": "Japanese yen", "symbol": "¥" } },
+    "capital": ["Tokyo"],
+    "languages": { "jpn": "Japanese" },
+    "flag": "https://flagcdn.com/w320/jp.png"
+  }
 ]
 ```
 
@@ -95,11 +94,11 @@ REST principles, return JSON responses, and require authentication where specifi
 
 ```
 {
-"name": "Japan",
-"currency": { "JPY": { "name": "Japanese yen", "symbol": "¥" } },
-"capital": ["Tokyo"],
-"languages": { "jpn": "Japanese" },
-"flag": "https://flagcdn.com/w320/jp.png"
+    "name": "Japan",
+    "currency": { "JPY": { "name": "Japanese yen", "symbol": "¥" } },
+    "capital": ["Tokyo"],
+    "languages": { "jpn": "Japanese" },
+    "flag": "https://flagcdn.com/w320/jp.png"
 }
 ```
 
@@ -119,17 +118,16 @@ REST principles, return JSON responses, and require authentication where specifi
 
 ```
 {
-"keys": [
-{
-"id": 1,
-"api_key": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
-"created_at": "2025-04-09T12:00:00Z",
-"last_used": "2025-04-09T12:05:00Z",
-"usage_count": 3,
-"is_active": 1
-},
-...
-]
+    "keys": [
+        {
+            "id": 1,
+            "api_key": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
+            "created_at": "2025-04-09T12:00:00Z",
+            "last_used": "2025-04-09T12:05:00Z",
+            "usage_count": 3,
+            "is_active": 1
+        },
+    ]
 }
 ```
 
