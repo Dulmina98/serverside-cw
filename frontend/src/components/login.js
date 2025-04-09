@@ -14,6 +14,7 @@ const Login = ({setToken}) => {
         try {
             const response = await axios.post('/auth/login', {email, password});
             setToken(response.data.token);
+            localStorage.setItem('token', response.data.token);
             navigate('/admin');
         } catch (error) {
             setMessage(error.response?.data?.error || 'Login failed');
