@@ -1,9 +1,12 @@
 import './App.css';
-import Register from "./components/register";
+import Login from "./components/login";
+import {BrowserRouter} from "react-router-dom";
 
 function App() {
   return (
-      <Register/>
+      <BrowserRouter>
+          <Login/>
+      </BrowserRouter>
   );
 }
 
