@@ -9,6 +9,8 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+
 app.use(helmet());
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
@@ -19,6 +21,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
+});
 
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
